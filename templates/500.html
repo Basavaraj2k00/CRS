@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +76,7 @@
 <body>
 
 <div class="container">
-  <a href="{% url 'index' %}" class="brand"><img src="../hrs/static/img/logo-white.png" width="180" height="100"></a>
+  <a href="{% url 'index' %}" class="brand"><img src="{% static 'img/logo-white.png' %}" width="180" height="100"></a>
 
   <h2>500</h2>
   <h1>Internal Server Error.</h1>
