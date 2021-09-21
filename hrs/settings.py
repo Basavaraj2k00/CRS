@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o2tg)z0*^&+!du8x6$+pk*$y&^#qu58#tl&a=f9-glmc0ij3tc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = ['yr-crs.herokuapp.com',
   'localhost',
   '127.0.0.1',]
 
@@ -68,7 +68,9 @@ JAZZMIN_SETTINGS = {
 }
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
