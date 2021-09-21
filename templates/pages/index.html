@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Home{% endblock title %}
+
+
+{% block content %}
+<!-- Showcase -->
+<section id="showcase">
+  <div class="container text-center">
+    <div class="home-search p-5">
+      <div class="overlay p-5">
+        <h1 class="display-4 mb-4">
+          House Searching Just Got So Easy
+        </h1>
+        <p class="lead">Search according to your choices, <br> Happy Searching!.</p>
+        <div class="search">
+          <form action="{% url 'search' %}" >
+            <!-- Form Row 1 -->
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label class="sr-only">Keywords</label>
+                <input type="text" name="keywords" class="form-control" placeholder="Keyword (Parking, Garden, etc)">
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="sr-only">Area</label>
+                <input type="text" name="area" class="form-control" placeholder="Area">
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="sr-only">Type</label>
+                <select name="type" class="form-control">
+                  <option selected="true" disabled="disabled">Type (Any)</option>
+                  {% for k,v in type_choices.items  %}
+                  <option value="{{k}}">{{v}}</option>
+                  {% endfor %}
+                  
+                </select>
+              </div>
+            </div>
+            <!-- Form Row 2 -->
+            <div class="form-row">
+              <div class="col-md-6 mb-3">
+                <label class="sr-only">Bedrooms</label>
+                <select name="bedrooms" class="form-control">
+                  <option selected="true" disabled="disabled">Bedrooms (All)</option>
+                  {% for k,v in bedroom_choices.items  %}
+                  <option value="{{k}}">{{v}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <select name="price" class="form-control" id="type">
+                  <option selected="true" disabled="disabled">Max Price (Any)</option>
+                  {% for k,v in price_choices.items  %}
+                  <option value="{{k}}">{{v}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-outline-light btn-block mt-4" type="submit">Search</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Alerts -->
+<br>
+{% include "alert.html" %}
+
+<!-- Listings -->
+<section id="listings" class="py-5">
+  <div class="container">
+    <h3 class="text-center mb-3">Latest Listings</h3>
+
+    <div class="row">
+      <!-- Listing 1 -->
+      {% if not listings %}
+      <div class="col-md-12">
+        <h1>No Listings available Right Now, Comeback Soon</h1>
+      </div>
+
+
+      {% else %}
+
+      {% for item in listings %} 
+
+
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          <img class="card-img-top" src="{{ item.photo_main.url }}" alt="Main Photo">
+          <div class="card-img-overlay">
+            <h2>
+              <span class="badge badge-dark text-white">₹{{item.price | intcomma}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="listing-heading text-center">
+              <h4 class="text-primary">{{item.title}}</h4>
+              <p>
+                <i class=" text-dark"></i>
+                   {{item.area}}, {{item.city}}, {{item.zipcode}}
+               </p>
+            </div>
+            <hr>
+
+            <div class="row py-2 text-dark">
+              <div class="col-6">
+                <i class="fas fa-bed"></i>&nbsp; Bedrooms: {{item.bedrooms}}
+              </div>
+              <div class="col-6">
+                <i class="fas fa-bath"></i>&nbsp; Bathrooms: {{item.bathrooms}}
+              </div>
+            </div>
+            <hr>
+            <div class="row py-2 text-dark">
+              <div class="col-12">
+                <i class="fas fa-user"></i> &nbsp; {{item.owner.name}}
+              </div>
+            </div>
+            <div class="row text-dark pb-2">
+              <div class="col-10">
+                <i class="fas fa-clock"></i>&nbsp; {{item.list_date | timesince}} ago
+              </div>
+            </div>
+            <hr>
+            <a href="{% url 'listing' item.id %}" class="btn btn-primary btn-block">More Info</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+    </div>
+
+
+  </div>
+
+</section>
+
+<section id="services" class="py-5 bg-secondary text-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4">
+        <i class="fas fa-comment fa-4x mr-4"></i>
+        <hr>
+        <h3>Consulting Services</h3>
+        <p>Providing ontime services <br> on authorized account</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fas fa-home fa-4x mr-4"></i>
+        <hr>
+        <h3>Residential Management</h3>
+        <p>Contribute to us by providing <br> your residence details</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fas fa-suitcase fa-4x mr-4"></i>
+        <hr>
+        <h3>Renting</h3>
+        <p>Make inquiries to the owner <br> for more information</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
